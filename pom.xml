@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<jetty.port>8080</jetty.port>
-		<appengine.version>1.9.28</appengine.version>
+		<appengine.version>1.9.82</appengine.version>
 		<gcloud.plugin.version>2.0.9.87.v20151118</gcloud.plugin.version>
 		<app.id>thrashdev</app.id>
 		<app.version>1</app.version>
@@ -21,10 +21,6 @@
 		<jersey.version>2.19</jersey.version>
 		<guice.version>3.0</guice.version>
 	</properties>
-
-	<prerequisites>
-		<maven>3.1.0</maven>
-	</prerequisites>
 
 	<dependencies>
 		<!-- Compile/runtime dependencies -->
@@ -76,7 +72,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -93,7 +89,6 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.8</version>
 				<configuration>
 					<target>
 						<echo level="info">
@@ -101,12 +96,12 @@
 							Your current JDK is: ${java.version}
 						</echo>
 						<condition property="jdkVersion">
-							<matches pattern="1.7" string="${java.version}" />
+							<matches pattern="1.8" string="${java.version}" />
 						</condition>
 						<fail unless="jdkVersion">
-							GAE requires classes/jsps compiled with JDK 1.7,
+							GAE requires classes/jsps compiled with JDK 1.8,
 							on OSX run:
-							export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+							export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 						</fail>
 						<!-- Move on if no failture -->
 						<echo message="Passed! using JDK ${java.version}" />
@@ -125,17 +120,17 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
 				<version>2.1</version>
-				<!-- what does this do? <executions> <execution> <phase>compile</phase> 
-					<goals> <goal>display-dependency-updates</goal> <goal>display-plugin-updates</goal> 
+				<!-- what does this do? <executions> <execution> <phase>compile</phase>
+					<goals> <goal>display-dependency-updates</goal> <goal>display-plugin-updates</goal>
 					</goals> </execution> </executions> -->
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<version>3.1</version>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -150,7 +145,7 @@
 					<systemPropertyVariables>
 						<buildDirectory>${project.build.directory}</buildDirectory>
 						<!-- force log output to single line -->
-						<!-- <java.util.logging.SimpleFormatter.format>%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS 
+						<!-- <java.util.logging.SimpleFormatter.format>%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS
 							%4$s %2$s %5$s%6$s%n</java.util.logging.SimpleFormatter.format> -->
 						<java.util.logging.config.file>${basedir}/src/main/webapp/WEB-INF/logging.properties</java.util.logging.config.file>
 						<app.version>${app.version}</app.version>
@@ -185,10 +180,10 @@
 					<address>0.0.0.0</address>
 					<version>${app.version}</version>
 					<fullScanSeconds>3</fullScanSeconds>
-					<!-- Comment in the below snippet to bind to all IPs instead of just 
+					<!-- Comment in the below snippet to bind to all IPs instead of just
 						localhost -->
 					<!-- address>0.0.0.0</address> <port>8080</port -->
-					<!-- Comment in the below snippet to enable local debugging with a remote 
+					<!-- Comment in the below snippet to enable local debugging with a remote
 						debugger like those included with Eclipse or IntelliJ -->
 					<jvmFlags>
 						<jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
